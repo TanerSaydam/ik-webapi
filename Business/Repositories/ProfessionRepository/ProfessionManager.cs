@@ -15,6 +15,7 @@ using Core.Utilities.Result.Abstract;
 using Core.Utilities.Result.Concrete;
 using DataAccess.Repositories.ProfessionRepository;
 using Core.Utilities.Business;
+using Entities.Dtos;
 
 namespace Business.Repositories.ProfessionRepository
 {
@@ -78,6 +79,23 @@ namespace Business.Repositories.ProfessionRepository
         public async Task<IDataResult<List<Profession>>> GetList()
         {
             return new SuccessDataResult<List<Profession>>(await _professionDal.GetAll());
+        }
+
+        [SecuredAspect()]
+        [CacheAspect()]
+        [PerformanceAspect()]
+        public async Task<IDataResult<GenericPaginationListDto<Profession>>> GetListWithPagination(int page, int size)
+        {
+            var result = await _professionDal.GetAllWithPagination(page, size);
+            var count = _professionDal.PaginationCount(size);
+
+            GenericPaginationListDto<Profession> pagination = new()
+            {
+                Datas = result,
+                TotalPageNumber = count,
+            };
+
+            return new SuccessDataResult<GenericPaginationListDto<Profession>>(pagination);
         }
 
         [SecuredAspect()]

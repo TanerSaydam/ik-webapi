@@ -35,6 +35,16 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public int PaginationCount(int size)
+        {
+            using (var context = new TContext())
+            {
+                var count = context.Set<TEntity>().AsQueryable().Count();
+                var result = Math.Ceiling(Convert.ToDecimal(count) / size);
+                return Convert.ToInt32(result);
+            }
+        }
+
         public async Task<TEntity> GetFirst()
         {
             using (var context = new TContext())
@@ -60,6 +70,14 @@ namespace Core.DataAccess.EntityFramework
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Modified;
                 await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<TEntity>> GetAllWithPagination(int page, int size)
+        {
+            using (var context = new TContext())
+            {
+                return await context.Set<TEntity>().Skip(page * size).Take(size).ToListAsync();
             }
         }
     }

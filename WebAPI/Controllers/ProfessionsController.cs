@@ -59,6 +59,17 @@ namespace WebApi.Controllers
             return BadRequest(result.Message);
         }
 
+        [HttpGet("[action]/{page}/{size}")]
+        public async Task<IActionResult> GetListWithPagination(int page, int size)
+        {
+            var result = await _professionService.GetListWithPagination(page,size);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
+
         [HttpGet("[action]/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
