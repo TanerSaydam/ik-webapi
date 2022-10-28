@@ -50,7 +50,7 @@ namespace WebAPI.Controllers
 
         [HttpGet("[action]")]
         //[Authorize(Roles = "GetList")]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList()        
         {
             var result = await _operationClaimService.GetList();
             if (result.Success)

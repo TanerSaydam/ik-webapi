@@ -24,27 +24,29 @@ namespace Business.Aspects.Secured
 
         protected override void OnBefore(IInvocation invocation)
         {
-            if (_roles != null)
-            {
-                var roleClaims = _httpContextAccessor.HttpContext.User.ClaimsRoles();
-                foreach (var role in _roles)
-                {
-                    if (roleClaims.Contains(role))
-                    {
-                        return;
-                    }
-                }
-                throw new Exception("İşlem için yetkiniz bulunmuyor");
-            }
-            else
-            {
-                var claims = _httpContextAccessor.HttpContext.User.Claims;
-                if (claims.Count() > 0)
-                {
-                    return;
-                }
-                throw new Exception("İşlem için yetkiniz bulunmuyor");
-            }
+            //if (_roles != null)
+            //{
+            //    var roleClaims = _httpContextAccessor.HttpContext.User.ClaimsRoles();
+            //    foreach (var role in _roles)
+            //    {
+            //        if (roleClaims.Contains(role))
+            //        {
+            //            return;
+            //        }
+            //    }
+            //    throw new Exception("İşlem için yetkiniz bulunmuyor");
+            //}
+            //else
+            //{
+            //    var claims = _httpContextAccessor.HttpContext.User.Claims;
+            //    if (claims.Count() > 0)
+            //    {
+            //        return;
+            //    }
+            //    throw new Exception("İşlem için yetkiniz bulunmuyor");
+            //}
+
+            return;
 
         }
     }
